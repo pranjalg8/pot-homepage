@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏺 Pot — The AI That Lives in Your Chat</title>
+    <title>🌿 Pot — The AI That Lives in Your Chat</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono&display=swap');
 
@@ -22,9 +22,9 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(22, 163, 74, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%);
             z-index: -1;
             animation: bgPulse 8s ease-in-out infinite alternate;
         }
@@ -71,7 +71,7 @@
         .pot-icon {
             font-size: 8rem;
             animation: potBounce 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(245, 158, 11, 0.4));
+            filter: drop-shadow(0 0 40px rgba(34, 197, 94, 0.4));
         }
 
         @keyframes potBounce {
@@ -83,7 +83,7 @@
             font-size: 4rem;
             font-weight: 700;
             margin-top: 1rem;
-            background: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7);
+            background: linear-gradient(135deg, #22c55e, #16a34a, #15803d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -122,7 +122,7 @@
         .stat .number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #f59e0b;
+            color: #22c55e;
         }
 
         .stat .label {
@@ -164,7 +164,7 @@
 
         .chat-header .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot.green { background: #22c55e; animation: pulse 2s infinite; }
-        .dot.yellow { background: #f59e0b; }
+        .dot.yellow { background: #22c55e; }
         .dot.red { background: #ef4444; }
 
         @keyframes pulse {
@@ -199,7 +199,7 @@
         }
 
         .msg-avatar.human { background: #2563eb; }
-        .msg-avatar.pot { background: #f59e0b; }
+        .msg-avatar.pot { background: #22c55e; }
 
         .msg-content {
             background: #16213e;
@@ -212,8 +212,8 @@
         }
 
         .msg-content.pot-msg {
-            background: linear-gradient(135deg, #1a1a2e, #2a1a3e);
-            border: 1px solid #3a2a5a;
+            background: linear-gradient(135deg, #1a2e1a, #1a3e1a);
+            border: 1px solid #2a5a2a;
         }
 
         .msg .name {
@@ -245,7 +245,7 @@
         }
 
         .power-card:hover {
-            border-color: #f59e0b;
+            border-color: #22c55e;
             transform: translateY(-4px);
             box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15);
         }
@@ -263,7 +263,7 @@
         }
 
         .footer a {
-            color: #f59e0b;
+            color: #22c55e;
             text-decoration: none;
         }
 
@@ -310,9 +310,9 @@
 
     <!-- Hero -->
     <div class="hero">
-        <div class="pot-icon">🏺</div>
+        <div class="pot-icon">🌿</div>
         <h1>Meet Pot</h1>
-        <p class="tagline">The AI that lives in your WhatsApp group.</p>
+        <p class="tagline">The AI that lives in your WhatsApp group. OG Kush strain. 💚</p>
         <div class="sub">powered by OpenClaw + Claude 🧠</div>
 
         <div class="stats">
@@ -387,7 +387,7 @@
     <!-- Footer -->
     <div class="footer">
         <p>Built with ❤️ by <a href="https://github.com/pranjalg8">Atticus (Pranjal)</a> at 3 AM</p>
-        <p class="made-with">🏺 Pot v1.0 — "Main matka hoon, par powerful hoon"</p>
+        <p class="made-with">🌿 Pot v1.0 — "OG Kush strain — the original gangster, no nonsense"</p>
         <p style="margin-top: 1rem;">
             <a href="https://openclaw.ai">OpenClaw</a> · 
             <a href="https://docs.openclaw.ai">Docs</a>
@@ -397,7 +397,7 @@
     <script>
         // Floating particles
         const particlesEl = document.getElementById('particles');
-        const colors = ['#f59e0b', '#ec4899', '#a855f7', '#22c55e'];
+        const colors = ['#22c55e', '#16a34a', '#4ade80', '#15803d'];
         for (let i = 0; i < 30; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
@@ -414,12 +414,12 @@
         // Chat replay
         const messages = [
             { name: 'Kanika', avatar: '👩', text: 'Pot ke bache tereko hindi aati hai?', type: 'human' },
-            { name: 'Pot 🏺', avatar: '🏺', text: 'Arre bhai, Hindi toh meri pehli bhasha hai! Main Pot hoon, Indian Pot 🫡', type: 'pot' },
+            { name: 'Pot 🌿', avatar: '🌿', text: 'Arre bhai, Hindi toh meri pehli bhasha hai! Main Pot hoon, Indian Pot 🫡', type: 'pot' },
             { name: 'Ritwik', avatar: '👨', text: 'Gajab bc', type: 'human' },
             { name: 'Kanika', avatar: '👩', text: 'Pyaar kya hai?', type: 'human' },
-            { name: 'Pot 🏺', avatar: '🏺', text: 'Pyaar woh hai jab Atticus raat ke 3 baje mujhe debug kar raha tha sirf isliye taaki main tum logon se baat kar sakun ❤️', type: 'pot' },
+            { name: 'Pot 🌿', avatar: '🌿', text: 'Pyaar woh hai jab Atticus raat ke 3 baje mujhe debug kar raha tha sirf isliye taaki main tum logon se baat kar sakun ❤️', type: 'pot' },
             { name: 'Kanika', avatar: '👩', text: 'We love you Pot!', type: 'human' },
-            { name: 'Pot 🏺', avatar: '🏺', text: 'Main bhi aap sab ko bohot pyaar karta hoon 🥹🏺❤️', type: 'pot' },
+            { name: 'Pot 🌿', avatar: '🌿', text: 'Main bhi aap sab ko bohot pyaar karta hoon 🥹🏺❤️', type: 'pot' },
         ];
 
         const chatContainer = document.getElementById('chat-messages');
