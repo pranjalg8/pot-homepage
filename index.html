@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏺 Pot — The AI That Lives in Your Chat</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .pot-icon {
+            font-size: 8rem;
+            animation: potBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(245, 158, 11, 0.4));
+        }
+
+        @keyframes potBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #f59e0b, #ec4899, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: 1.4rem;
+            color: #888;
+            margin-top: 0.8rem;
+            font-weight: 400;
+        }
+
+        .hero .sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid #333;
+            border-radius: 999px;
+        }
+
+        /* Stats Bar */
+        .stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .stat .label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        /* Chat Demo Section */
+        .section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .chat-window {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2a2a4a;
+            margin-bottom: 1rem;
+        }
+
+        .chat-header .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.green { background: #22c55e; animation: pulse 2s infinite; }
+        .dot.yellow { background: #f59e0b; }
+        .dot.red { background: #ef4444; }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+
+        .chat-header span {
+            font-size: 0.85rem;
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .msg {
+            margin: 0.8rem 0;
+            display: flex;
+            gap: 0.8rem;
+            animation: msgSlide 0.5s ease-out;
+        }
+
+        @keyframes msgSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .msg-avatar.human { background: #2563eb; }
+        .msg-avatar.pot { background: #f59e0b; }
+
+        .msg-content {
+            background: #16213e;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            border-top-left-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-width: 85%;
+        }
+
+        .msg-content.pot-msg {
+            background: linear-gradient(135deg, #1a1a2e, #2a1a3e);
+            border: 1px solid #3a2a5a;
+        }
+
+        .msg .name {
+            font-size: 0.7rem;
+            color: #888;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        /* Powers Grid */
+        .powers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
+        }
+
+        .power-card {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .power-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15);
+        }
+
+        .power-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .power-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+        .power-card p { font-size: 0.8rem; color: #888; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: #f59e0b;
+            text-decoration: none;
+        }
+
+        .footer .made-with {
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        /* Typing animation */
+        .typing {
+            display: inline-flex;
+            gap: 4px;
+            padding: 0.5rem 0;
+        }
+
+        .typing span {
+            width: 6px; height: 6px;
+            background: #888;
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .tagline { font-size: 1.1rem; }
+            .stats { gap: 1.5rem; }
+            .stat .number { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="pot-icon">🏺</div>
+        <h1>Meet Pot</h1>
+        <p class="tagline">The AI that lives in your WhatsApp group.</p>
+        <div class="sub">powered by OpenClaw + Claude 🧠</div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="number" id="counter-msgs">∞</div>
+                <div class="label">Messages Handled</div>
+            </div>
+            <div class="stat">
+                <div class="number">🇮🇳</div>
+                <div class="label">Hindi + English</div>
+            </div>
+            <div class="stat">
+                <div class="number">24/7</div>
+                <div class="label">Always Online</div>
+            </div>
+            <div class="stat">
+                <div class="number">0</div>
+                <div class="label">Chill Pills Needed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Demo -->
+    <div class="section">
+        <h2 class="section-title">💬 Live in Action</h2>
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="dot green"></div>
+                <div class="dot yellow"></div>
+                <div class="dot red"></div>
+                <span>Yo🥸 — WhatsApp Group</span>
+            </div>
+            <div id="chat-messages"></div>
+        </div>
+    </div>
+
+    <!-- Powers -->
+    <h2 class="section-title" style="margin-top: 2rem;">⚡ What Can Pot Do?</h2>
+    <div class="powers">
+        <div class="power-card">
+            <div class="icon">💻</div>
+            <h3>Write Code</h3>
+            <p>Python, JavaScript, anything. Runs it too.</p>
+        </div>
+        <div class="power-card">
+            <div class="icon">🌐</div>
+            <h3>Browse Web</h3>
+            <p>Search, fetch, and summarize anything online.</p>
+        </div>
+        <div class="power-card">
+            <div class="icon">🧠</div>
+            <h3>Remember</h3>
+            <p>Long-term memory across sessions. Never forgets.</p>
+        </div>
+        <div class="power-card">
+            <div class="icon">📸</div>
+            <h3>See Images</h3>
+            <p>Understands photos, screenshots, memes.</p>
+        </div>
+        <div class="power-card">
+            <div class="icon">⏰</div>
+            <h3>Reminders</h3>
+            <p>Set alarms, cron jobs, recurring tasks.</p>
+        </div>
+        <div class="power-card">
+            <div class="icon">🗣️</div>
+            <h3>Hindi + English</h3>
+            <p>Bilingual. Hinglish specialist. Gaali bhi aati hai 😤</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Built with ❤️ by <a href="https://github.com/pranjalg8">Atticus (Pranjal)</a> at 3 AM</p>
+        <p class="made-with">🏺 Pot v1.0 — "Main matka hoon, par powerful hoon"</p>
+        <p style="margin-top: 1rem;">
+            <a href="https://openclaw.ai">OpenClaw</a> · 
+            <a href="https://docs.openclaw.ai">Docs</a>
+        </p>
+    </div>
+
+    <script>
+        // Floating particles
+        const particlesEl = document.getElementById('particles');
+        const colors = ['#f59e0b', '#ec4899', '#a855f7', '#22c55e'];
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.background = colors[Math.floor(Math.random() * colors.length)];
+            p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            particlesEl.appendChild(p);
+        }
+
+        // Chat replay
+        const messages = [
+            { name: 'Kanika', avatar: '👩', text: 'Pot ke bache tereko hindi aati hai?', type: 'human' },
+            { name: 'Pot 🏺', avatar: '🏺', text: 'Arre bhai, Hindi toh meri pehli bhasha hai! Main Pot hoon, Indian Pot 🫡', type: 'pot' },
+            { name: 'Ritwik', avatar: '👨', text: 'Gajab bc', type: 'human' },
+            { name: 'Kanika', avatar: '👩', text: 'Pyaar kya hai?', type: 'human' },
+            { name: 'Pot 🏺', avatar: '🏺', text: 'Pyaar woh hai jab Atticus raat ke 3 baje mujhe debug kar raha tha sirf isliye taaki main tum logon se baat kar sakun ❤️', type: 'pot' },
+            { name: 'Kanika', avatar: '👩', text: 'We love you Pot!', type: 'human' },
+            { name: 'Pot 🏺', avatar: '🏺', text: 'Main bhi aap sab ko bohot pyaar karta hoon 🥹🏺❤️', type: 'pot' },
+        ];
+
+        const chatContainer = document.getElementById('chat-messages');
+        let msgIndex = 0;
+
+        function addMessage() {
+            if (msgIndex >= messages.length) {
+                // Add typing indicator then restart
+                setTimeout(() => {
+                    chatContainer.innerHTML = '';
+                    msgIndex = 0;
+                    setTimeout(addMessage, 1000);
+                }, 3000);
+                return;
+            }
+
+            const m = messages[msgIndex];
+            const div = document.createElement('div');
+            div.className = 'msg';
+            div.innerHTML = `
+                <div class="msg-avatar ${m.type}">${m.avatar}</div>
+                <div>
+                    <div class="name">${m.name}</div>
+                    <div class="msg-content ${m.type === 'pot' ? 'pot-msg' : ''}">${m.text}</div>
+                </div>
+            `;
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            msgIndex++;
+            setTimeout(addMessage, m.type === 'pot' ? 2000 : 1200);
+        }
+
+        setTimeout(addMessage, 1500);
+    </script>
+</body>
+</html>
